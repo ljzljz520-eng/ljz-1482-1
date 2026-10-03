@@ -1,0 +1,58 @@
+:root {
+  --bg: #f4f6fa; --card: #fff; --line: #e3e8f0; --ink: #1d2733; --sub: #66748a;
+  --blue: #2563eb; --green: #0f9d58; --red: #d93025; --orange: #e8710a; --purple: #7c3aed;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+a { color: var(--blue); text-decoration: none; }
+.layout { display: flex; min-height: 100vh; }
+.sidebar { width: 216px; background: #16233b; color: #cdd8ea; padding: 18px 12px; flex-shrink: 0; }
+.sidebar h1 { font-size: 16px; color: #fff; margin: 4px 8px 18px; line-height: 1.5; }
+.sidebar a { display: block; color: #cdd8ea; padding: 9px 12px; border-radius: 8px; margin-bottom: 4px; font-size: 14px; }
+.sidebar a.active, .sidebar a:hover { background: #24365c; color: #fff; }
+.main { flex: 1; padding: 20px 28px; max-width: 1180px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.topbar h2 { margin: 0; font-size: 20px; }
+.user-switch { font-size: 13px; color: var(--sub); }
+.user-switch select { margin-left: 6px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+.card h3 { margin: 0 0 10px; font-size: 15px; }
+.grid { display: grid; gap: 14px; }
+.grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.stat .num { font-size: 26px; font-weight: 700; }
+.stat .lbl { color: var(--sub); font-size: 13px; }
+button { font: inherit; border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 6px 13px; cursor: pointer; }
+button.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+button.danger { color: var(--red); border-color: #f2c1bd; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+input, select, textarea { font: inherit; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: #fff; }
+textarea { width: 100%; min-height: 90px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--sub); font-weight: 600; }
+.badge { display: inline-block; font-size: 12px; border-radius: 20px; padding: 2px 10px; margin-right: 6px; white-space: nowrap; }
+.badge.green { background: #e6f4ea; color: var(--green); }
+.badge.red { background: #fce8e6; color: var(--red); }
+.badge.orange { background: #fef3e2; color: var(--orange); }
+.badge.blue { background: #e8f0fe; color: var(--blue); }
+.badge.purple { background: #f1eafe; color: var(--purple); }
+.badge.gray { background: #eef1f6; color: var(--sub); }
+.muted { color: var(--sub); font-size: 12px; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.scene { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; background: #fff; }
+.scene.head-warn { border-color: #f5c6c0; }
+.stmt { background: #f8fafd; border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; margin: 8px 0; }
+.chip { display: inline-block; background: #e8f0fe; color: var(--blue); border-radius: 6px; padding: 1px 8px; font-size: 12px; margin: 2px 4px 2px 0; cursor: default; }
+.chip.missing { background: #fce8e6; color: var(--red); }
+.diff-add { color: var(--green); } .diff-del { color: var(--red); }
+.diff-old { background: #fdeceb; padding: 1px 4px; border-radius: 4px; }
+.diff-new { background: #e6f4ea; padding: 1px 4px; border-radius: 4px; }
+.alert { border-radius: 8px; padding: 10px 14px; margin: 10px 0; font-size: 13px; }
+.alert.err { background: #fce8e6; color: #a50e0e; }
+.alert.okk { background: #e6f4ea; color: #137333; }
+.alert.warn { background: #fef3e2; color: #b06000; }
+.mono { font-family: ui-monospace, monospace; font-size: 12px; }
+pre.json { background: #0f172a; color: #dbe7ff; padding: 12px; border-radius: 8px; overflow: auto; font-size: 12px; max-height: 420px; }
+.tabs { display: flex; gap: 6px; margin-bottom: 14px; }
+.tabs button.on { background: var(--blue); color: #fff; border-color: var(--blue); }

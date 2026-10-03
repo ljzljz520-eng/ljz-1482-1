@@ -1,0 +1,13 @@
+{
+  "name": "county-policy-video-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "县域政策短视频全栈编排台：来源修订、脚本场次、复核意见、异步剪辑清单与预览包",
+  "scripts": {
+    "start": "node server/src/index.js",
+    "dev:server": "node server/src/index.js",
+    "dev:web": "vite web",
+    "build": "vite build web",
+    "test": "node server/test/acceptance.js"
+  }
+}
