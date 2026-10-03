@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.6",
+    "express": "^4.22.3"
+  },
+  "name": "policy-shortvideo-studio",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently -k -n API,WEB -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "node server/index.js",
+    "dev:web": "vite",
+    "dev:worker": "node server/worker.js",
+    "build": "vite build",
+    "start": "SERVE_DIST=1 node server/index.js",
+    "serverless:page": "node serverless/serve.js",
+    "test": "node --test test/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.2.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.21"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  }
+}

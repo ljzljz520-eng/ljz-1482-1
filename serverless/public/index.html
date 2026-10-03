@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>无服务器任务驱动页 - 县域政策短视频编排台</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; margin: 0; background:#f4f6fa; color:#1f2733; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 24px; }
+  .card { background:#fff; border:1px solid #e3e8f0; border-radius:10px; padding:18px; margin-bottom:16px; }
+  input,button { font-size:14px; padding:8px 10px; border-radius:7px; border:1px solid #cfd7e4; margin:4px 4px 4px 0; }
+  button { background:#2257d6; color:#fff; border:none; cursor:pointer; padding:8px 16px; }
+  pre { background:#101828; color:#d7e3f4; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:340px; }
+  .pill { display:inline-block; padding:2px 9px; border-radius:12px; font-size:12px; font-weight:600; background:#e8f1ff; color:#2257d6; }
+  .muted { color:#8593a8; font-size:13px; line-height:1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>无服务器静态页面：持久队列驱动器</h2>
+  <div class="card">
+    <label class="muted">编排台 API 地址</label><br/>
+    <input id="base" style="width:60%" value="http://localhost:4000/api" />
+    <button onclick="tick()">手动 TICK</button>
+    <button onclick="toggleAuto()" id="autoBtn">开始自动 TICK</button>
+    <div class="muted" style="margin-top:8px">
+      本页面是纯静态文件（可放任意对象存储/CDN）。每次 tick 由无服务器函数风格调用一次：
+      领取 queued 任务 → 执行 → 写回结果。任务状态全部持久化在编排台 SQLite，页面刷新/实例消失都不影响。
+    </div>
+  </div>
+  <div class="card">
+    <h3>最近任务 <span id="stats" class="pill"></span></h3>
+    <pre id="out">（等待 tick…）</pre>
+  </div>
+</div>
+<script>
+let timer = null;
+function base() { return document.getElementById('base').value.replace(/\/$/, ''); }
+async function tick() {
+  try {
+    const r = await fetch(base() + '/serverless/tick', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ owner: 'static-page' }),
+    });
+    const data = await r.json();
+    const jobs = await (await fetch(base() + '/jobs?limit=10')).json();
+    const stats = jobs.reduce((m,j)=>{m[j.status]=(m[j.status]||0)+1;return m;},{});
+    document.getElementById('stats').textContent = JSON.stringify(stats);
+    document.getElementById('out').textContent =
+      'TICK ' + new Date().toLocaleTimeString() + '\n' + JSON.stringify(data, null, 2)
+      + '\n\nJOBS\n' + JSON.stringify(jobs.map(j => ({ type: j.type, status: j.status, attempts: j.attempts, error: j.error?.message })), null, 2);
+  } catch (e) {
+    document.getElementById('out').textContent = '请求失败：' + e + '\n（本地跨域时确认编排台已启动并允许 CORS，默认已开启）';
+  }
+}
+function toggleAuto() {
+  if (timer) { clearInterval(timer); timer = null; document.getElementById('autoBtn').textContent = '开始自动 TICK'; }
+  else { timer = setInterval(tick, 1500); document.getElementById('autoBtn').textContent = '停止自动 TICK'; tick(); }
+}
+</script>
+</body>
+</html>
